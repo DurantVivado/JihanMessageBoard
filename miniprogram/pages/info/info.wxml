@@ -1,0 +1,21 @@
+<!--pages/info/info.wxml-->
+<!-- 主要对应公告栏 -->
+<!-- 用户守则区域 -->
+<view class="background">
+	<view class="container">
+		<view class="user-agreement" wx:if="{{content=='用户守则'}}">
+			<rich-text nodes='<div class="agreement-title">{{agreement_title}}</div><div class="agreement-content">{{agreement_content}}</div>'> </rich-text>
+			<image class="qrcode" src="{{author_QRcode}}" mode="widthFix" show-menu-by-longpress> </image>
+		</view>
+
+		<!-- 版本日志区域 -->
+		<view class="version-log" wx:if="{{content=='版本日志'}}">
+			<rich-text nodes='<div class="log-title">{{log_title}}</div><div class="log-content">{{log_content}}</div>'> </rich-text>
+		</view>
+
+		<view class="new-user-bonus" wx:if="{{content=='新用户福利'}}">
+			<rich-text nodes='<div class="bonus-title">{{bonus_title}}</div><div class="bonus-content">{{bonus_content}}</div>'> </rich-text>
+		</view>
+		<image class="qrcode" src="{{group_QRcode}}" mode="widthFix" show-menu-by-longpress> </image>
+	</view>
+</view>

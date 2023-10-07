@@ -1,0 +1,65 @@
+/* pages/userInfo/userInfo.wxss */
+.background {
+  background-color: #f8f8f8;
+}
+
+text {
+  color: #3d3d3d;
+}
+
+.prompt-text{
+  margin-top: 15rpx;
+  margin-left: 15rpx;
+}
+
+.avatar-wrapper {
+  padding: 0;
+  width: 56px !important;
+  border-radius: 8rpx;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+  background-color: #fff;
+}
+ 
+.avatar {
+  display: block;
+  width: 100rpx;
+  height: 100rpx;
+}
+ 
+.container {
+  display: flex;
+}
+.row{
+   margin: 15rpx;
+   border-radius: 15rpx;
+   border: 1px solid #ccc;
+   display: flex;
+   align-items: center;
+   height: 80rpx;
+   padding-left: 20rpx;
+}
+.weui-input{
+    flex: 1;
+}
+
+.log-in {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx;
+  margin-top: 60rpx; 
+}
+
+.log-out{
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx;
+}
+
+.divider {
+  margin-top: 100rpx;
+  border-top: 3rpx solid #f2f2f2;
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx;
+}

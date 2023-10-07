@@ -1,0 +1,139 @@
+<!--index.wxml-->
+<view class="background">
+  <!-- 个人头像展示区域 -->
+  <view class="header">
+    <view class="avator">
+      <!-- <open-data type="userAvatarUrl"></open-data> -->
+      <image src="{{avatarUrl}}" mode="widthFix" bindtap="getUserInfo"></image>
+    </view>
+    <!-- 搜索区域 -->
+    <view class="search">
+      <input placeholder="搜一搜O(●ˇ∀ˇ●)b" auto-focus cursor="50" bindinput="getSearchInput" bindconfirm="searchArticle"></input>
+      <button class="search-button" hover-class="search-hover-button" bindtap="searchArticle">搜索</button>
+    </view>
+  </view>
+  <!-- 公告区域，可以放轮播图 -->
+  <swiper class="swiper-container" indicator-dots indicator-color="white" indicator-active-color="grey" autoplay="true" interval="3500" circular="true">
+  <!-- 第一个轮播图 -->
+  <swiper-item wx:for="{{swiperList}}" wx:key="index">
+    <image src="{{item}}" mode="widthFix" bindtap="navigateToSignage" data-id="{{index}}"></image>
+  </swiper-item>
+  </swiper>
+  <!-- 文章显示区域 -->
+  <view class="news-list" scroll-y bindscrolltolower="loadMore">
+    <view class="news-item" wx:for="{{search_news_list}}" wx:key="index">
+      <view class="title-bar">
+        <text class="author"> {{item.article_list[0].author}}</text>
+        <text class="time">{{item.create_time}}</text>
+      </view>
+      <view wx:for="{{item.article_list}}" wx:key="index" wx:for-item="article">
+        <!-- 文章展示区 -->
+        <view wx:if="{{!article.is_subitem}}" class="article-item">
+          <!-- 如果为父文章则图片和标题为上下布局 -->
+          <image src="{{article.thumb_url}}" mode="widthFix" bindtap="navigateToArticle" data-index="{{index}}" data-value="{{article.article_url}}"></image>
+          <text user-select bindtap="navigateToArticle" data-index="{{index}}" data-value="{{article.article_url}}">{{article.title}}</text>
+        </view>
+        <view wx:else class="article-subitem">
+          <!-- 如果为子文章则图片和标题为左右布局 -->
+          <!-- <view class="horizontalDivider"></view> -->
+          <view class="subview">
+            <text user-select bindtap="navigateToArticle" data-index="{{index}}" data-value="{{article.article_url}}">{{article.title}}</text>
+            <image src="{{article.thumb_url}}" mode="widthFix" bindtap="navigateToArticle" data-index="{{index}}" data-value="{{article.article_url}}"></image>
+          </view>
+        </view>
+        <!-- 一键三连区域 -->
+        <!-- 点赞 -->
+        <view class="comment">
+          <view class="likeCount" bindtap="likeArticle" data-id="{{article.id}}" data-articleUrl="{{article.article_url}}">
+            <image  src="{{all_comment_list[article.id - 1].isLiked ? like_on_image : like_off_image}}" mode="aspectFill"></image>
+            <text>{{all_comment_list[article.id - 1].likeCount}} </text>
+            <view class="verticalDivider"></view>
+          </view>
+
+          <!-- 分享 -->
+          <view class="starCount" bindtap="starArticle" data-id="{{article.id}}" data-articleUrl="{{article.article_url}}">
+            <button  class="share-button" open-type="share" data-article_title="{{article.title}}" data-article_url="{{article.article_url}}">
+              <image  src="{{all_comment_list[article.id - 1].isStarred ? star_on_image : star_off_image}}" mode="aspectFill" ></image>
+              <text>{{all_comment_list[article.id - 1].starCount}}</text>
+            </button>
+            <view class="verticalDivider"></view>
+          </view>
+
+          
+          <!-- 评论 -->
+          <view class="commentCount" bindtap="getCommentList" data-id="{{article.id}}" data-articleUrl="{{article.article_url}}">
+            <image  src="{{all_comment_list[article.id - 1].isCommented ? comment_on_image : comment_off_image}}" mode="aspectFill"></image>
+            <text>{{all_comment_list[article.id - 1].commentCount}}</text>
+          </view>
+        
+        </view>
+
+        <view class="comment-list" wx:if="{{all_comment_list[article.id - 1].isCommented}}">
+          <view class="no-comment" wx:if="{{all_comment_list[article.id - 1].comments.length == 0}}"> 快来发表第一条评论吧~ </view>
+          <view class= "comment-zone" wx:for="{{all_comment_list[article.id - 1].comments}}" wx:key="index" wx:for-item="comment">
+            <image class="comment-avatar" src="{{comment.avatarUrl}}" mode="widthFix"></image>
+            <view class="comment-text">
+              <view class="comment-left">
+                <view class="commentator"> {{comment.commentator}}</view>
+                <view class="comment-createtime"> {{comment.createTime}}</view>
+              </view>
+              <text class="comment-content" bindtap="replyToComment" data-commentId="{{comment.commentId}}"
+               data-commentator="{{comment.commentator}}" user-select> {{comment.content}}</text>
+              <view class="comment-bottom">
+              <!-- 添加空白view用于右对齐 -->
+                <view class="left-space"></view>
+                <view class="comment-right">
+                    <view class="comment-reply" bindtap="replyToComment" 
+                    data-commentId="{{comment.commentId}}"
+                    data-commentator="{{comment.commentator}}"> 回复 |</view>
+                    <image class="comment-like" src="{{comment.isLike ? up_on_image : up_off_image}}" mode="widthFix" bindtap="likeComment" data-articleId="{{article.id}}" data-commentId="{{index}}"></image>
+                    <view class="likeCommentCount" bindtap="likeComment" data-articleId="{{article.id}}" data-commentId="{{index}}"> {{comment.likeCount}}</view>
+                </view>
+                   
+              </view>
+               <!-- 显示子评论 -->
+               <view wx:if="{{subcomments[comment.commentId].length > 0}}" class= "subcomment-text" bindtap="showAllReplies"> {{subcomments[comment.commentId].length}} 条回复></view>
+               <!-- 首页显示点赞数最高的评论，若不止一个，则展示发布时间最早的 -->
+               <view  wx:for="{{subcomments[comment.commentId]}}" wx:key="index" wx:for-item="subcomment">
+                <view class= "subcomment" wx:if="{{index < numOfReply}}"> 
+                <image class="comment-avatar" src="{{subcomment.avatarUrl}}" mode="widthFix"></image>
+                <view class="comment-text">
+                  <view class="comment-left">
+                    <view class="commentator"> {{subcomment.commentator}}</view>
+                    <view class="comment-createtime"> {{subcomment.createTime}}</view>
+                  </view>
+                  <text class="comment-content" bindtap="replyToSubcomment" data-commentId="{{comment.commentId}}"
+                  data-commentator="{{subcomment.commentator}}" user-select> {{subcomment.content}}</text>
+                  <view class="comment-bottom">
+                  <!-- 添加空白view用于右对齐 -->
+                    <view class="left-space"></view>
+                    <view class="comment-right">
+                        <view class="comment-reply" bindtap="replyToSubcomment" 
+                        data-commentId="{{comment.commentId}}"
+                        data-commentator="{{subcomment.commentator}}"> 回复 |</view>
+                        <image class="comment-like" src="{{subcomment.isLike ? up_on_image : up_off_image}}" mode="widthFix" bindtap="likeComment" data-articleId="{{article.id}}" data-commentId="{{index}}"></image>
+                        <view class="likeCommentCount" bindtap="likeComment" data-articleId="{{article.id}}" data-commentId="{{index}}"> {{subcomment.likeCount}}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              </view>
+            </view>   
+          </view>
+        <!-- <view class="subcomment-zone" wx:if="{{showSubcommentZone}}">
+        子评论区
+        </view> -->
+        <view class="input-box" wx:if="{{showInputBox}}">
+          <textarea placeholder="{{placeholder}}"
+          bindinput="getInputData" auto-height auto-focus cursor-spacing='140'
+          bindconfirm="postComment"
+          data-id="{{article.id}}" 
+          data-article_url="{{article.article_url}}" maxlength="{{MAX_COMMENT_LEN}}" value="{{precomments.comments}}"></textarea>
+          <button type="primary" bindtap="postComment" data-id="{{article.id}}" data-article_url="{{article.article_url}}">Echo!</button>
+        </view>
+      </view>
+    </view>
+  </view>
+   <view class="scrollRefresh">我是有底线的~</view>
+</view>
+</view>

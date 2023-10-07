@@ -1,0 +1,96 @@
+/* pages/info/info.wxss */
+.background {
+	background-color: #f8f8f8;
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+text {
+  color: #3d3d3d;
+}
+
+.container {
+	margin-top: 15rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	padding: 15rpx;
+	border-radius: 40rpx;
+	background-color: #fefefe;
+	width: 95%;
+	height: auto;
+}
+.user-agreement {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	padding: 15rpx;
+}
+
+.agreement-title {
+	color:#3d3d3d;
+	text-align: center;
+  font-size: 70rpx;
+  font-weight: bold;
+  margin: 15rpx;
+}
+
+.agreement-content {
+	color:#3d3d3d;
+  font-size: 40rpx;
+  line-height: 1.6em;
+}
+
+.qrcode {
+	margin-top: 20rpx;
+}
+
+
+.version-log {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	padding: 15rpx;
+}
+
+.log-title {
+	color:#3d3d3d;
+	text-align: center;
+  font-size: 70rpx;
+  font-weight: bold;
+  margin: 15rpx;
+}
+
+.log-content {
+	color:#3d3d3d;
+  font-size: 40rpx;
+  line-height: 1.6em;
+}
+
+.new-user-bonus {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	padding: 15rpx;
+}
+
+.bonus-title {
+	color:#3d3d3d;
+	text-align: center;
+  font-size: 70rpx;
+  font-weight: bold;
+  margin: 15rpx;
+}
+
+.bonus-content {
+	text-indent: 2em;
+	color:#3d3d3d;
+  font-size: 40rpx;
+  line-height: 1.6em;
+}

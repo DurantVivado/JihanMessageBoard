@@ -1,0 +1,3 @@
+<!--pages/articles/articles.wxml-->
+<!-- 公众号文章界面，一篇文章会填满整个页面，所以不用设置样式 -->
+<web-view src="{{article_url}}" bindmessage=""></web-view>

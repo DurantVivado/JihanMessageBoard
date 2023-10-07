@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/articles/articles",
+    "pages/userInfo/userInfo",
+    "pages/info/info"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f8f8f8",
+    "navigationBarTitleText": "迹寒Echo社区",
+    "navigationBarTextStyle": "black"
+  },
+
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
